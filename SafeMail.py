@@ -8,6 +8,7 @@ Created on Sat May 15 11:57:16 2021
 import serial
 serial_distance = serial.Serial('COM5')
 serial_distance.flushInput()
+count = 0
 
 while True:
     try:
@@ -16,4 +17,6 @@ while True:
         print(decoded_bytes)
     except:
         print("Error")
-        
+        count += 1
+        if count > 100:
+            break
