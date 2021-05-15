@@ -91,7 +91,7 @@ while True:
             color = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             cv2.imshow('frame', color)
             print("Action triggered!")
-            serial_distance.close()
+            
             cv2.imwrite('image.jpg', frame)
             
             with open("image.jpg", "rb") as file:
@@ -110,7 +110,7 @@ while True:
             face1 = result[0]['faceId']
             print ("Face 1:" + face1)	
             
-            img2_url = url
+            img2_url = 'https://c.ndtvimg.com/2021-03/9op9k9ko_elon-musk-reuters_625x300_25_March_21.jpg'
             response2 = requests.get(img2_url)
             img2 = Image.open(BytesIO(response2.content))
             
@@ -136,10 +136,14 @@ print(detected)
 theft = 0
 if val == "Verified":
     theft = 0
+    serial_distance.write("a".encode())
 else:
     theft = 1
+    serial_distance.write("b".encode())
     tweet_exec = requests.get('https://maker.ifttt.com/trigger/tweelon/with/key/dnDRzxYa_9QqoK-lOJYa_K')
     print(tweet_exec.status_code)
+
     
 print(theft)
 push_db(theft)
+serial_distance.close()
