@@ -8,6 +8,31 @@ Created on Sat May 15 11:57:16 2021
 import serial
 import cv2
 
+
+def detect_faces(path):
+    from google.cloud import vision
+    import io
+    face_exists = 0
+    client = vision.ImageAnnotatorClient()
+    with io.open(path, 'rb') as image_file:
+        content = image_file.read()
+        
+    image = vision.Image(content=content)
+    response = client.face_detection(image=image)
+    faces = response.face_annotations
+    
+    if faces:
+        face_exists = 1
+    else:
+        face_exists = 0
+        print("face not found")
+        
+    for face in faces:
+        print('Confidence: {}'.format(face.detection_confidence))
+
+    return face_exists
+
+
 serial_distance = serial.Serial('COM5')
 serial_distance.flushInput()
 count = 0
@@ -36,3 +61,5 @@ while True:
 
 live.release()
 cv2.destroyAllWindows()
+detected = detect_faces('image.jpg')
+print(detected)
