@@ -5,10 +5,18 @@ Created on Sat May 15 11:57:16 2021
 @author: Neel
 """
 
+faceURI = "https://centralindia.api.cognitive.microsoft.com/face/v1.0/"
+faceKey = "38850d7c8fe547d6af9dc644a5f1c894"
+
 import serial
 import cv2
 import base64
 import requests
+import cognitive_face as CF
+import requests
+from io import BytesIO
+from matplotlib.pyplot import imshow
+from PIL import Image, ImageDraw
 
 
 def detect_faces(path):
@@ -35,11 +43,30 @@ def detect_faces(path):
     return face_exists
 
 
+def verify_face(face1, face2):
+    verified = "Not Verified"
+            
+    verify = CF.face.verify(face1, face2)
+            
+    if verify['isIdentical'] == True:
+        verified = "Verified"
+            
+    print(verified)
+    print ("Confidence Level: " + str(verify['confidence']))
+
 serial_distance = serial.Serial('COM5')
 serial_distance.flushInput()
 count = 0
 count_valid = 0
 live = cv2.VideoCapture(0)
+CF.BaseUrl.set(faceURI)
+CF.Key.set(faceKey)
+img_url = 'https://c.ndtvimg.com/2021-03/9op9k9ko_elon-musk-reuters_625x300_25_March_21.jpg'
+result = CF.face.detect(img_url)
+print(result)
+response = requests.get(img_url)
+img = Image.open(BytesIO(response.content))
+
 
 while True:
     try:
@@ -66,7 +93,22 @@ while True:
                 dict = res.json()
                 url = dict['data']['url']
                 print(url)
-                
+            
+            imshow(img)
+            face1 = result[0]['faceId']
+            print ("Face 1:" + face1)	
+            
+            img2_url = url
+            response2 = requests.get(img2_url)
+            img2 = Image.open(BytesIO(response2.content))
+            
+            result2 = CF.face.detect(img2_url)
+            
+            if result2 is not None:
+                face2 = result2[0]['faceId']
+                print ("Face 2:" + face2)
+            
+            verify_face(face1, face2)
             break
         
     except:
