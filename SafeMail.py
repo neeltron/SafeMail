@@ -13,6 +13,7 @@ import cv2
 import base64
 import requests
 import cognitive_face as CF
+import mysql.connector
 from io import BytesIO
 from matplotlib.pyplot import imshow
 from PIL import Image
@@ -50,8 +51,19 @@ def verify_face(face1, face2):
         return "Not Verified"
             
 
-def push_db():
-    print()
+def push_db(theft):
+    db = mysql.connector.connect(
+    host = "remotemysql.com",
+    user = "hwW4R6cA0s",
+    password = "9bVe4xsxvX",
+    database = "hwW4R6cA0s"
+    )
+    cursor = db.cursor()
+    sql = "INSERT INTO SafeMail (auth) VALUES (1)"
+    val = str(theft)
+    cursor.execute(sql, val)
+    db.commit()
+    
 
 serial_distance = serial.Serial('COM5')
 serial_distance.flushInput()
@@ -97,7 +109,7 @@ while True:
             face1 = result[0]['faceId']
             print ("Face 1:" + face1)	
             
-            img2_url = url
+            img2_url = 'https://c.ndtvimg.com/2021-03/9op9k9ko_elon-musk-reuters_625x300_25_March_21.jpg'
             response2 = requests.get(img2_url)
             img2 = Image.open(BytesIO(response2.content))
             
@@ -127,3 +139,4 @@ else:
     theft = 1
     
 print(theft)
+push_db(theft)
