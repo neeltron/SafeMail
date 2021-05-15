@@ -91,7 +91,7 @@ while True:
             color = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             cv2.imshow('frame', color)
             print("Action triggered!")
-            serial_distance.close()
+            
             cv2.imwrite('image.jpg', frame)
             
             with open("image.jpg", "rb") as file:
@@ -136,10 +136,14 @@ print(detected)
 theft = 0
 if val == "Verified":
     theft = 0
+    serial_distance.write("a".encode())
 else:
     theft = 1
+    serial_distance.write("b".encode())
     tweet_exec = requests.get('https://maker.ifttt.com/trigger/tweelon/with/key/dnDRzxYa_9QqoK-lOJYa_K')
     print(tweet_exec.status_code)
+
     
 print(theft)
 push_db(theft)
+serial_distance.close()
