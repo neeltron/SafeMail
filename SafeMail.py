@@ -13,10 +13,9 @@ import cv2
 import base64
 import requests
 import cognitive_face as CF
-import requests
 from io import BytesIO
 from matplotlib.pyplot import imshow
-from PIL import Image, ImageDraw
+from PIL import Image
 
 
 def detect_faces(path):
@@ -44,15 +43,15 @@ def detect_faces(path):
 
 
 def verify_face(face1, face2):
-    verified = "Not Verified"
-            
     verify = CF.face.verify(face1, face2)
-            
     if verify['isIdentical'] == True:
-        verified = "Verified"
+        return "Verified"
+    else:
+        return "Not Verified"
             
-    print(verified)
-    print ("Confidence Level: " + str(verify['confidence']))
+
+def push_db():
+    print()
 
 serial_distance = serial.Serial('COM5')
 serial_distance.flushInput()
@@ -74,7 +73,7 @@ while True:
         decoded_bytes = float(ser_bytes[0:len(ser_bytes)-2].decode("utf-8"))
         print(decoded_bytes)
         count_valid += 1
-        if decoded_bytes < 8 and count_valid > 2:
+        if decoded_bytes < 8 and count_valid > 5:
             ret, frame = live.read()
             color = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             cv2.imshow('frame', color)
@@ -108,7 +107,7 @@ while True:
                 face2 = result2[0]['faceId']
                 print ("Face 2:" + face2)
             
-            verify_face(face1, face2)
+            val = verify_face(face1, face2)
             break
         
     except:
@@ -121,3 +120,10 @@ live.release()
 cv2.destroyAllWindows()
 detected = detect_faces('image.jpg')
 print(detected)
+theft = 0
+if val == "Verified":
+    theft = 0
+else:
+    theft = 1
+    
+print(theft)
