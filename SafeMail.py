@@ -110,7 +110,7 @@ while True:
             face1 = result[0]['faceId']
             print ("Face 1:" + face1)	
             
-            img2_url = 'https://c.ndtvimg.com/2021-03/9op9k9ko_elon-musk-reuters_625x300_25_March_21.jpg'
+            img2_url = url
             response2 = requests.get(img2_url)
             img2 = Image.open(BytesIO(response2.content))
             
