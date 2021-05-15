@@ -13,7 +13,7 @@ Devpost: https://devpost.com/software/safemail
 Demo Video: TBD
 
 ### Purpose and Functionality
-SafeMail is a theft prevention mailbox that uses facial recognition and identifies whether it's the authorized user or not. It informs the user, logs the image of the perpetrator on a dashboard, and finally tweets potential mail theft on a neighborhood Twitter.
+SafeMail is a theft prevention mailbox that uses facial recognition and identifies whether it's the authorized user or not and then unlocks the mailbox or cash counter. It informs the user, logs the image of the perpetrator on a dashboard, and finally tweets potential mail theft on a neighborhood Twitter.
 
 ### Instructions to Run Frontend Locally:
 In a terminal:
