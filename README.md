@@ -8,9 +8,15 @@ Backend: https://github.com/neeltron/SafeMail
 
 Frontend: https://github.com/saketsarin/SafeMail-frontend
 
-Devpost: https://devpost.com/software/safemail
+HackUPC Devpost: https://devpost.com/software/safemail
 
-Demo Video: TBD
+Neighborhood Hacks Devpost: https://devpost.com/software/safemail-3wrbzf 
+
+Demo Video: https://youtu.be/7lPVbsgB0k4
+
+Domain.com: yeet-the-imposter-with.tech
+
+GoDaddy: yeet-the-impostor-with.us
 
 ### Purpose and Functionality
 SafeMail is a theft prevention system that uses facial recognition and identifies whether it's the authorized user or not and then unlocks the mailbox or cash counter. It informs the user, logs the image of the perpetrator on a dashboard, and finally tweets potential mail or cash theft on a neighborhood Twitter.
