@@ -1,4 +1,4 @@
-# SafeMail (https://safemail.vercel.app/)
+# SafeMail (https://ratificate.us/SafeMail)
 
 ## BLAHAJGang Team
 
